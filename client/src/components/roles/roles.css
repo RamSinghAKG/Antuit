@@ -1,0 +1,17 @@
+.role-container .action-btn-container {
+    margin: 20px 10px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.role-container .action-btn {
+    margin-left: 10px;
+    width: 35%;
+}
+.role-list {
+    margin: 20px 10px;
+}
+.role-list .action-btn{
+    margin-top: 0;
+    width: 100%;
+}

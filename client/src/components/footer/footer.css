@@ -1,0 +1,19 @@
+.footer-container {
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+    background-color: black;
+    padding: 5px;
+    color: white;
+    display: flex;
+    align-items: flex-start;
+}
+.footerLogo {
+    width: 100px;
+    height: 16px;
+    padding: 3px 10px;
+}
+.footer-container label {
+    padding-top: 3px;
+}
+

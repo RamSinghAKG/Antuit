@@ -1,0 +1,31 @@
+  .input-container {
+    margin: 20px 10px;
+  }
+
+  .input-container input[type=text], select {
+    padding: 10px 5px;
+    font-size: 17px;
+    border: 1px solid grey;
+    display: inline-block;
+    width:70%;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .input-container select {
+      height: 42px;
+  }
+
+  .input-container label {
+    padding: 10px 5px;
+    font-size: 17px;
+    display: inline-block;
+    width: 30%;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .required {
+    color: red;
+  }
+  

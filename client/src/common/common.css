@@ -1,0 +1,38 @@
+.error-message {
+    color: red;
+    font-size: 25px;
+    margin: 20px 20px;
+  }
+  .action-btn {
+    padding: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 15px;
+    background-color: skyblue;
+    color: white;
+    width: 25%;
+    margin-top: 30px;
+    cursor: pointer;
+}
+table {
+  border-collapse: collapse;
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+}
+th {
+  background-color: grey;
+}
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  box-sizing: border-box;
+  padding: 5px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+.no-border {
+  border: none;
+}

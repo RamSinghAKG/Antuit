@@ -1,0 +1,16 @@
+{
+  "short_name": "Antuit",
+  "name": "Antuit: Real AI solutions company",
+  "icons": [
+    {
+      "src": "images/antuit_logo.webp",
+      "sizes": "512x512",
+      "type": "image/webp"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#82b548",
+  "background_color": "#82b548"
+}
