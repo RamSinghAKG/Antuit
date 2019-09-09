@@ -5,7 +5,8 @@ export const url = {
     getUsers: '/user/',
     createRole: '/role/create',
     updateRole: '/role/update',
-    getRoles: '/role/'
+    getRoles: '/role',
+    getPermissions: '/permission'
 }
 export const postData = (url, data) => {
     const options = {

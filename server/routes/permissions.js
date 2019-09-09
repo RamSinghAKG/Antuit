@@ -13,7 +13,19 @@ router.get('/create', function (req, res, next) {
   savePermission(res, permissions);
 });
 
+router.get('/', function (req, res, next) {
+  getPermissions(req, res);
+});
 
+async function getPermissions(req, res) {
+  try {
+    let allRecords = await Permission.find({});
+    res.send({data: allRecords, status: 200, statusText: "SUCCESS" });
+  } catch (error) {
+    console.log(error);
+    res.send(error);
+  }
+}
 
 async function savePermission(res, permissions) {
   try {

@@ -12,6 +12,7 @@ export const UPDATE_ROLE_FAILED = "UPDATE_ROLE_FAILED";
 export const GET_ROLE_INFO_REQUESTED = "GET_ROLE_INFO_REQUESTED";
 export const GET_ROLE_INFO_SUCCESS = "GET_ROLE_INFO_SUCCESS";
 export const GET_ROLE_INFO_FAILED = "GET_ROLE_INFO_FAILED";
+export const GET_PERMISSION_SUCCESS = "GET_PERMISSION_SUCCESS";
 
 export const setRoleEditMode = (isEdit) => (dispatch) => {
     return dispatch({
@@ -67,10 +68,10 @@ export  const updateRole =  (roleInfo={}) => async (dispatch) => {
         return commonActions.loadingFailed({status: 'FAILED', statusText: error.message})(dispatch);
     }
 };
-export  const getRoles =  (offset=0) => async (dispatch) => {
+export  const getRoles =  () => async (dispatch) => {
     try {
         commonActions.loadingInprogress(dispatch);
-        let url = service.url.getRoles + offset;
+        let url = service.url.getRoles;
         const roles = await service.getData(url);
         commonActions.loadingCompleted(dispatch);
         return dispatch({
@@ -81,5 +82,21 @@ export  const getRoles =  (offset=0) => async (dispatch) => {
          commonActions.loadingFailed({status: 'FAILED', statusText: error.message})(dispatch);
     }
 };
+
+export  const getPermissions =  () => async (dispatch) => {
+    try {
+        commonActions.loadingInprogress(dispatch);
+        let url = service.url.getPermissions;
+        const permissions = await service.getData(url);
+        commonActions.loadingCompleted(dispatch);
+        return dispatch({
+            type: GET_PERMISSION_SUCCESS,
+            payload: permissions.data
+        });
+    }catch(error){
+         commonActions.loadingFailed({status: 'FAILED', statusText: error.message})(dispatch);
+    }
+};
+
 
 

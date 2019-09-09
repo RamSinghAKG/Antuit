@@ -8,23 +8,25 @@ import Spinner from '@bit/ram-singh.components.spinner';
 import ErrorBoundary from 'components/errorboundary/errorboundary';
 import LabelInput from 'components/UI/LabelInput';
 import * as commonActions from 'common/actions';
-import config from 'src/config';
 import './roles.css';
 const Role = (props) => {
     const isEdit = props.isEdit;
     const getRoles = props.getRoles;
+    const getPermissions = props.getPermissions;
     const resetRole = props.resetRole;
     const clearError = props.clearError;
     useEffect(() => {
         getRoles();
-        resetRole()
+        getPermissions();
+        resetRole();
         return () => {
             clearError();
         }
-    }, [getRoles, resetRole, clearError]);
+    }, [getRoles, getPermissions, resetRole, clearError]);
     
     const create = () => {
         const isDataValid = props.role.name.length > 0 && props.role.permission.length > 0;
+        !isDataValid && props.setError("Enter role name");
         isDataValid && props.createRole(props.role);
         isDataValid && refreshRoleInfo();
     };
@@ -37,7 +39,7 @@ const Role = (props) => {
             props.getRoles();
             props.resetRole();
         }, 100);
-    }
+    };
     const update = () => {
         const isDataValid = props.role.name.length > 0 && props.role.permission.length > 0;
         isDataValid && props.updateRole(props.role);
@@ -49,8 +51,7 @@ const Role = (props) => {
     };
     const createBtn = isEdit ? <button aria-label="update role" className="action-btn" onClick={() => update()}>Update</button> : <button aria-label="create role" className="action-btn" onClick={() => create()}>Create</button>;
     const isNameDisable = isEdit ? true : false;
-    const allPermissions = config.permissions;
-    
+    const allPermissions = props.permissions.reduce((acc, permission) =>  { acc.push(permission.name); return acc; }, []);
     const selectedPermissionIndex = props.role.permission.length > 0 ? allPermissions.findIndex(permission => permission === props.role.permission) : 0;
     const roleList = props.roles.length === 0 ? <tr><td className="no-border">No Records Found</td></tr> :
         props.roles.map((role, index) => {
@@ -63,7 +64,7 @@ const Role = (props) => {
                     {props.isLoading ? <Suspense fallback={<div>Loading...</div>}>
                         <Spinner />
                     </Suspense> : null}
-                    <LabelInput type="input" isInputDisable={isNameDisable} fieldKey="name" labelName="Name"  value={props.role.name} placeholder="Enter role name" onChange={props.setName}></LabelInput>
+                    <LabelInput type="input" isInputDisable={isNameDisable} fieldKey="name" isRequired labelName="Name"  value={props.role.name} placeholder="Enter role name" onChange={props.setName}></LabelInput>
                     <LabelInput type="select" selectedIndex={selectedPermissionIndex} isRequired fieldKey="permission" options={allPermissions} labelName="Permission" value={props.role.permission} placeholder="Select Permission" onChange={(event) => props.setPermission(event.target.value)}></LabelInput>
                     
                     <div className="action-btn-container">
@@ -86,6 +87,7 @@ const Role = (props) => {
     );
 };
 Role.propTypes = {
+    getPermissions: PropTypes.func,
     setPermission: PropTypes.func,
     setName: PropTypes.func,
     createRole: PropTypes.func,
@@ -103,6 +105,7 @@ function mapStateToProps(state) {
     return {
         role: state.roleReducer.role,
         roles: state.roleReducer.roles,
+        permissions: state.roleReducer.permissions,
         isEdit: state.roleReducer.isEdit,
         isLoading: state.commonReducer.isLoading
     }
@@ -111,6 +114,7 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         setError: commonActions.setError,
         clearError: commonActions.clearError,
+        getPermissions: actions.getPermissions,
         setRoleEditMode: actions.setRoleEditMode,
         setPermission: actions.setPermission,
         setName: actions.setName,

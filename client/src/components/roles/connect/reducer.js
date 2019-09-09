@@ -4,6 +4,7 @@ const initialState = {
     role: { name: '', permission: '' },
     roles: [],
     roleInfoResponded: false,
+    permissions: []
 };
 const reducer = (state = initialState, action) => {
     const resetRole = { name: '', permission: '' };
@@ -26,6 +27,8 @@ const reducer = (state = initialState, action) => {
                 return { ...state, role: action.payload};
         case actions.CREATE_ROLE_FAILED:
             return { ...state, error: action.payload };
+        case actions.GET_PERMISSION_SUCCESS:
+            return { ...state, permissions: action.payload};
         case actions.GET_ROLE_INFO_SUCCESS:
             return { ...state, roles: action.payload, roleInfoResponded: true};
         case actions.GET_ROLE_INFO_FAILED:

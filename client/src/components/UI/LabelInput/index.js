@@ -5,9 +5,13 @@ import './LabelInput.css';
 const LabelInput = (props) => {
   const inputField = <input aria-label={props.labelName} name={props.fieldKey} disabled={props.isInputDisable} type="text" value={props.value} 
   placeholder={props.placeholder} onChange={(event) => props.onChange(event.target.value)}></input>;
-  
-  const selectedValue = props.options && props.options[props.selectedIndex] && props.options[props.selectedIndex].toLowerCase();
-  const options = props.options && props.options.map((option, index) => <option key={index}  value={option.toLowerCase()}>{option.toUpperCase()}</option>);
+  let selectedValue = '';
+  let options = '';
+  if(props.options && props.options.length>0){
+    const selectedOptions = props.options && props.options[props.selectedIndex];
+    selectedValue = selectedOptions.length>0 && selectedOptions.toLowerCase();
+    options = props.options.map((option, index) => <option key={index}  value={option.toLowerCase()}>{option.toUpperCase()}</option>);
+  }
   const dropDownField = <select value={selectedValue} onChange={props.onChange}> {options} </select>;
   const isRequired = props.isRequired ? <span className="required">*</span> : '';
 

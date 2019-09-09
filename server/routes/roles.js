@@ -15,16 +15,12 @@ router.put('/update', function (req, res, next) {
   updateRole(req, res);
 });
 
-
-router.get('/:offset', function (req, res, next) {
+router.get('/', function (req, res, next) {
   getRoles(req, res);
 });
 async function getRoles(req, res) {
   try {
-    const offset = req.params.offset;
-    const numOfRecords = 5;
-    const skips = offset * numOfRecords;
-    let allRecords = await Role.find({}).skip(skips).limit(numOfRecords);
+    let allRecords = await Role.find({});
     res.send({data: allRecords, status: 200, statusText: "SUCCESS" });
   } catch (error) {
     console.log(error);

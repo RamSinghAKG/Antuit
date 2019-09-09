@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import * as actions from './connect/actions';
+import * as roleActions from 'components/roles/connect/actions';
 import Spinner from '@bit/ram-singh.components.spinner';
 import ErrorBoundary from 'components/errorboundary/errorboundary';
 import LabelInput from 'components/UI/LabelInput';
@@ -13,14 +14,16 @@ import './users.css';
 const User = (props) => {
     const isEdit = props.isEdit;
     const getUsers = props.getUsers;
+    const getRoles = props.getRoles;
     const clearError = props.clearError;
 
     useEffect(() => {
         getUsers();
+        getRoles();
         return () => {
             clearError();
           };
-    }, [getUsers, clearError]);
+    }, [getUsers, getRoles, clearError]);
     
     const create = () => {
         var isDataValid = props.user.userId.length > 0 && props.user.role.length > 0 && props.user.client.length > 0;
@@ -56,7 +59,7 @@ const User = (props) => {
     const createBtn = isEdit ? <button aria-label="update user" className="action-btn" onClick={() => update()}>Update</button> : <button aria-label="create user" className="action-btn" onClick={() => create()}>Create</button>;
     const isNameDisable = isEdit ? true : false;
     const allClients = config.clientList;
-    const allRoles = ['admin', 'customer', 'user'];
+    const allRoles = props.roles.reduce((acc, role) =>  { acc.push(role.name); return acc; }, []);
     const selectedClientIndex = props.user.client.length > 0 ? allClients.findIndex(client => client === props.user.client) : 0;
     const selectedRolesIndex = props.user.role.length > 0 ? allRoles.findIndex(role => role === props.user.role) : 0;
     const userList = props.users.length === 0 ? <tr><td className="no-border">No Records Found</td></tr> :
@@ -110,6 +113,7 @@ User.propTypes = {
     setCurrentUser: PropTypes.func,
     clearError: PropTypes.func,
     setError: PropTypes.func,
+    getRoles: PropTypes.func,
     isLoading: PropTypes.bool,
     isEdit:  PropTypes.bool
 };
@@ -118,6 +122,7 @@ function mapStateToProps(state) {
         isEdit: state.userReducer.isEdit,
         users: state.userReducer.users,
         user: state.userReducer.user,
+        roles: state.roleReducer.roles,
         isLoading: state.commonReducer.isLoading
     }
 }
@@ -135,7 +140,8 @@ function mapDispatchToProps(dispatch) {
         createUser: actions.createUser,
         resetUser: actions.resetUser,
         updateUser: actions.updateUser,
-        getUsers: actions.getUsers
+        getUsers: actions.getUsers,
+        getRoles: roleActions.getRoles
     }, dispatch);
 };
 
