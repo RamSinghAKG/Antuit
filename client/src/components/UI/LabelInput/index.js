@@ -7,10 +7,10 @@ const LabelInput = (props) => {
   placeholder={props.placeholder} onChange={(event) => props.onChange(event.target.value)}></input>;
   let selectedValue = '';
   let options = '';
-  if(props.options && props.options.length>0){
+  if(props.options && props.options.length>0) {
     const selectedOptions = props.options && props.options[props.selectedIndex];
     selectedValue = selectedOptions.length>0 && selectedOptions.toLowerCase();
-    options = props.options.map((option, index) => <option key={index}  value={option.toLowerCase()}>{option.toUpperCase()}</option>);
+    options = props.options.map((option, index) => <option key={index}  value={option.toLowerCase()}>{option}</option>);
   }
   const dropDownField = <select value={selectedValue} onChange={props.onChange}> {options} </select>;
   const isRequired = props.isRequired ? <span className="required">*</span> : '';
@@ -26,8 +26,12 @@ const LabelInput = (props) => {
   );
 };
 LabelInput.propTypes = {
-  isRequired: PropTypes.bool,
-  options: PropTypes.array,
+  labelName: PropTypes.string,  
+  fieldKey: PropTypes.string,  // key for container
+  value: PropTypes.string, // value for input
+  isInputDisable: PropTypes.bool,  // disable
+  isRequired: PropTypes.bool,      //  mandatory field
+  options: PropTypes.array,       // dropdown options
   onchange: PropTypes.func
 }
 export default LabelInput;
