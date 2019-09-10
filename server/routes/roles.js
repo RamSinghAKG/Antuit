@@ -15,9 +15,20 @@ router.put('/update', function (req, res, next) {
   updateRole(req, res);
 });
 
+router.post('/delete', async function (req, res, next) {
+    try {
+      await Role.deleteMany({name: 'Test'});
+      res.send({status: 200, statusText: "SUCCESS" });
+    } catch (error) {
+      console.log(error);
+      res.send(error);
+    }
+});
+
 router.get('/', function (req, res, next) {
   getRoles(req, res);
 });
+
 async function getRoles(req, res) {
   try {
     let allRecords = await Role.find({});

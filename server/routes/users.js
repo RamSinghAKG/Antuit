@@ -28,8 +28,9 @@ async function getUsers(req, res) {
     const offset = req.params.offset;
     const numOfRecords = 5;
     const skips = offset * numOfRecords;
-    let allRecords = await User.find({}).skip(skips).limit(numOfRecords);
-    res.send({ data: allRecords, status: 200, statusText: "SUCCESS" });
+    const allRecords = await User.find({});
+    const limitedRecords = await User.find({}).skip(skips).limit(numOfRecords);
+    res.send({ totalRecord: allRecords.length, data: limitedRecords, status: 200, statusText: "SUCCESS" });
   } catch (error) {
     console.log(error);
     res.send(error);

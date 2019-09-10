@@ -7,3 +7,8 @@ Project Setup steps:
 5) cd client
 6) npm install
 7) npm start    // open browser: http://localhost:3000
+
+
+// Pending items
+1) Pagination in UI
+2) Delete option in UI
