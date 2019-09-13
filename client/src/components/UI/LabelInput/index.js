@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ErrorBoundary from 'components/errorboundary/errorboundary';
-import './LabelInput.css';
+import './LabelInput.scss';
 const LabelInput = (props) => {
   const inputField = <input aria-label={props.labelName} name={props.fieldKey} disabled={props.isInputDisable} type="text" value={props.value} 
   placeholder={props.placeholder} onChange={(event) => props.onChange(event.target.value)}></input>;

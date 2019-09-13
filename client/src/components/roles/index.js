@@ -8,7 +8,7 @@ import Spinner from '@bit/ram-singh.components.spinner';
 import ErrorBoundary from 'components/errorboundary/errorboundary';
 import LabelInput from 'components/UI/LabelInput';
 import * as commonActions from 'common/actions';
-import './roles.css';
+import './roles.scss';
 const Role = (props) => {
     const isEdit = props.isEdit;
     const getRoles = props.getRoles;

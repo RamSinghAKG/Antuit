@@ -1,0 +1,26 @@
+.action-container {
+    margin-left: 30px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    .action-link {
+        font-size: 20px;
+        padding: 30px;
+        height: 200px;
+        display: flex;
+        align-items: center;
+        background-color: rgb(187, 187, 187);
+        color: black;
+        margin: 30px;
+        font-weight: bold;
+    }
+}
+
+
+
+
+
+
+
+

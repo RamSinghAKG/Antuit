@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ErrorBoundary from 'components/errorboundary/errorboundary';
-import './home.css';
+import './home.scss';
 const Home = () => {
   return (
     <ErrorBoundary>

@@ -9,7 +9,7 @@ import User from 'components/users';
 import Role from 'components/roles';
 import Footer from 'components/footer/footer';
 import ErrorBoundary from 'components/errorboundary/errorboundary';
-import './app.css';
+import './app.scss';
 const App = () => {
     return (
         <ErrorBoundary>

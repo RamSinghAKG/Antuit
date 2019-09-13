@@ -1,0 +1,57 @@
+.multi-select-container {
+  border: 1px solid grey;
+  width: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  box-sizing: border-box;
+  flex-flow: wrap;
+  .close {
+    padding: 5px;
+    background-color: white;
+    border-radius: 13px;
+    cursor: pointer;
+    float: right;
+    margin: 0 5px 0 0px;
+  }
+  .selectBtn {
+    min-width: 100px;
+    padding: 8px 0;
+    border: 1px solid grey;
+    background-color: grey;
+    display: inline-block;
+    border-radius: 40px;
+    margin: 5px;
+    text-align: center;
+    font-size: 17px;
+    font-weight: bold;
+  }
+  select {
+    border: none;
+    display: inline-block;
+    height: 56px;
+    margin: 0 0 0 auto;
+    width: auto;
+    flex-grow: 1;
+  }
+}
+
+.multi-select-label {
+  padding: 10px 5px;
+  font-size: 17px;
+  display: inline-block;
+  width: 30%;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.btntext {
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.multi-selector-component {
+  display: flex;
+  margin: 20px 10px;
+}

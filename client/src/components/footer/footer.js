@@ -1,5 +1,5 @@
 import React from 'react';
-import './footer.css';
+import './footer.scss';
 const Footer = () => {
     console.log('render footer..');
     const footerText = `© 2019 Antuit Inc. All rights reserved.`;

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import 'src/common/common.css';
+import 'src/common/common.scss';
 class ErrorBoundary extends React.Component {
     state = { hasError: false, error: '' };
   

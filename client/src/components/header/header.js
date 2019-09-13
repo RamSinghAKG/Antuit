@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import ErrorBoundary from 'components/errorboundary/errorboundary';
-import './header.css';
-import 'src/common/common.css';
+import './header.scss';
+import 'src/common/common.scss';
 const Header = (props) => {
     return (
         <ErrorBoundary>
