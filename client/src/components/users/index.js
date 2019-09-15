@@ -9,9 +9,10 @@ import Spinner from '@bit/ram-singh.components.spinner';
 import ErrorBoundary from 'components/errorboundary/errorboundary';
 import LabelInput from 'components/UI/LabelInput';
 import MultiSelect from 'components/UI/MultiSelect';
+import Pagination from 'components/UI/Pagination';
 import * as commonActions from 'common/actions';
 import config from 'src/config';
-import './users.css';
+import './users.scss';
 const User = (props) => {
     const isEdit = props.isEdit;
     const getUsers = props.getUsers;
@@ -38,6 +39,11 @@ const User = (props) => {
             props.createUser(props.user);
             refreshUserInfo();
         } 
+    };
+    const onPageSelected = (pagenum) => {
+        console.log('page num: ', pagenum);
+        props.setSelectedPage(pagenum);
+        props.getUsers(pagenum-1);
     };
     const goBack = () => {
         const { history } = props;
@@ -72,7 +78,6 @@ const User = (props) => {
     const isNameDisable = isEdit ? true : false;
     const allClients = config.clientList;
     const allRoles = props.roles.reduce((acc, role) =>  { acc.push(role.name); return acc; }, []);
-    // const selectedClientIndex = props.user.client.length > 0 ? allClients.findIndex(client => client === props.user.client) : 0;
     const selectedRolesIndex = props.user.role.length > 0 ? allRoles.findIndex(role => role === props.user.role) : 0;
     const userList = props.users.length === 0 ? <tr><td className="no-border">No Records Found</td></tr> :
         props.users.map((user, index) => {
@@ -90,7 +95,6 @@ const User = (props) => {
                     <LabelInput type="input" fieldKey="name" labelName="Name"  value={props.user.name} placeholder="Enter user name" onChange={props.setName}></LabelInput>
                     <LabelInput type="input" fieldKey="email" labelName="Email"  value={props.user.email} placeholder="Enter user email" onChange={props.setEmail}></LabelInput>
                     <LabelInput type="select" selectedIndex={selectedRolesIndex} isRequired fieldKey="role" options={allRoles} labelName="Role" value={props.user.role} placeholder="Select Role" onChange={(event) => props.setRole(event.target.value)}></LabelInput>
-                    {/* <LabelInput type="select" selectedIndex={selectedClientIndex} isRequired fieldKey="client" options={allClients} labelName="Client" value={props.user.client} placeholder="Select client" onChange={(event) => props.setClient(event.target.value)}></LabelInput> */}
                     <MultiSelect labelName="Client" isRequired fieldKey="client" selectedOptions={props.user.client} options={allClients} onChange={onClientSelection} onRemove={onClientRemove}></MultiSelect>
                     <div className="action-btn-container">
                         {createBtn}
@@ -106,6 +110,10 @@ const User = (props) => {
                         </thead>
                         <tbody>{userList}</tbody>
                     </table>
+                    <div className="pagination-container">
+                        <Pagination onClick={(num) => onPageSelected(num)} selectedPage={props.selectedPage} totalRecord={props.totalRecord} perPageRecords={5}></Pagination>
+                    </div>
+                    
                 </section>
             </main>
         </ErrorBoundary>
@@ -134,8 +142,10 @@ function mapStateToProps(state) {
         isEdit: state.userReducer.isEdit,
         users: state.userReducer.users,
         user: state.userReducer.user,
+        totalRecord: state.userReducer.totalRecord,
         roles: state.roleReducer.roles,
-        isLoading: state.commonReducer.isLoading
+        isLoading: state.commonReducer.isLoading,
+        selectedPage: state.userReducer.selectedPage
     }
 }
 function mapDispatchToProps(dispatch) {
@@ -149,6 +159,7 @@ function mapDispatchToProps(dispatch) {
         setEmail: actions.setEmail,
         setRole: actions.setRole,
         setClient: actions.setClient,
+        setSelectedPage: actions.setSelectedPage,
         createUser: actions.createUser,
         resetUser: actions.resetUser,
         updateUser: actions.updateUser,

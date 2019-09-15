@@ -7,6 +7,7 @@ export const SET_EMAIL = "SET_EMAIL";
 export const SET_USERID = "SET_USERID";
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
 export const SET_CLIENT = "SET_CLIENT";
+export const SET_SELECTED_PAGE = "SET_SELECTED_PAGE";
 export const RESET_USER = "RESET_USER";
 export const CREATE_USER_SUCCESS = "CREATE_USER_SUCCESS";
 export const CREATE_USER_FAILED = "CREATE_USER_FAILED";
@@ -76,6 +77,7 @@ export  const createUser =  (userInfo={}) => async (dispatch) => {
         return commonActions.loadingFailed({status: 'FAILED', statusText: error.message})(dispatch);
     }
 };
+
 export  const updateUser =  (userInfo={}) => async (dispatch) => {
     try {
         commonActions.loadingInprogress(dispatch);
@@ -88,6 +90,12 @@ export  const updateUser =  (userInfo={}) => async (dispatch) => {
         return commonActions.loadingFailed({status: 'FAILED', statusText: error.message})(dispatch);
     }
 };
+
+export const setSelectedPage = (pagenum) => async (dispatch) => {
+    console.log('setSelectedPage');
+    return dispatch({ type: SET_SELECTED_PAGE, payload: pagenum});
+};
+
 export  const getUsers =  (offset=0) => async (dispatch) => {
     try {
         resetUser();        
@@ -97,7 +105,7 @@ export  const getUsers =  (offset=0) => async (dispatch) => {
         commonActions.loadingCompleted(dispatch);
         return dispatch({
             type: GET_USER_INFO_SUCCESS,
-            payload: users.data
+            payload: {users: users.data, totalRecord: users.totalRecord}
         });
     }catch(error){
          commonActions.loadingFailed({status: 'FAILED', statusText: error.message})(dispatch);

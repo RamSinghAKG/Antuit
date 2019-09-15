@@ -3,7 +3,9 @@ const initialState = {
     isEdit: false,
     user: { userId: '', name: '', email: '', client: '', role: '' },
     users: [],
+    totalRecord: 0,
     userInfoResponded: false,
+    selectedPage: 1
 };
 const reducer = (state = initialState, action) => {
     const resetUser = { userId: '', name: '', email: '', client: '', role: '' };
@@ -20,6 +22,8 @@ const reducer = (state = initialState, action) => {
             return { ...state, user: { ...state.user, userId: action.payload } };
         case actions.SET_CLIENT:
             return { ...state, user: { ...state.user, client: action.payload } };
+        case actions.SET_SELECTED_PAGE:
+            return { ...state, selectedPage: action.payload };
         case actions.UPDATE_USER_SUCCESS:
             return state;
         case actions.UPDATE_USER_FAILED:
@@ -33,7 +37,7 @@ const reducer = (state = initialState, action) => {
         case actions.CREATE_USER_FAILED:
             return { ...state, error: action.payload };
         case actions.GET_USER_INFO_SUCCESS:
-            return { ...state, users: action.payload, userInfoResponded: true};
+            return { ...state, users: action.payload.users, totalRecord: action.payload.totalRecord, userInfoResponded: true};
         case actions.GET_USER_INFO_FAILED:
             return { ...state, error: action.payload };
         default:

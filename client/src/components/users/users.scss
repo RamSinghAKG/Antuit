@@ -1,0 +1,24 @@
+.user-container {
+    .action-btn-container {
+        margin: 20px 10px;
+        display: flex;
+        justify-content: flex-end;
+    }
+    .action-btn {
+        margin-left: 10px;
+        width: 35%;
+    }
+}
+
+.user-list {
+    margin: 20px 10px;
+    .action-btn {
+        margin-top: 0;
+        width: 100%;
+    }
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+}

@@ -1,0 +1,30 @@
+.pagination {
+  list-style-type: none;
+  li {
+    text-align: center;
+    margin: 5px;
+    display: inline;
+    button {
+      text-decoration: none;
+      color: #999;
+      padding: 10px;
+      border: none;
+      border-radius: 20px;
+      outline: none;
+      font-size: 16px;
+    }
+    .disable {
+      cursor: none;
+      pointer-events: none;
+    }
+    button:hover {
+      background-color: #eee;
+      z-index: 1;
+    }
+    button.active {
+      background-color: skyblue;
+      color: white;
+      z-index: 10;
+    }
+  }
+}
