@@ -8,7 +8,7 @@ const Pagination = (props) => {
     const totalPages = Math.ceil(props.totalRecord / props.perPageRecords);
     const prevDisable = props.selectedPage === 1 ? 'disable' : '';
     const nextDisable = props.selectedPage === totalPages ? 'disable' : '';
-    return <ul class="pagination">
+    return <ul className="pagination">
         <li><button className={prevDisable} onClick={() => onPageClick(props.selectedPage-1)}>PREV</button></li>
         {props.selectedPage > 2 ? <li><button onClick={() => onPageClick(props.selectedPage-2)}>{props.selectedPage - 2}</button></li> : ''}
         {props.selectedPage > 1 ? <li><button onClick={() => onPageClick(props.selectedPage-1)}>{props.selectedPage - 1}</button></li> : ''}

@@ -57,6 +57,7 @@ const Role = (props) => {
         props.roles.map((role, index) => {
             return <tr key={index}><td>{role.name}</td><td>{role.permission}</td><td><button onClick={() => onEdit(props.roles[index])} className="action-btn">Edit</button></td></tr>
         })
+    console.log('render role...');
     return (
         <ErrorBoundary>
             <main>
@@ -101,29 +102,17 @@ Role.propTypes = {
     isLoading: PropTypes.bool,
     isEdit:  PropTypes.bool
 };
-function mapStateToProps(state) {
+function mapStateToProps({roleReducer, commonReducer}) {
     return {
-        role: state.roleReducer.role,
-        roles: state.roleReducer.roles,
-        permissions: state.roleReducer.permissions,
-        isEdit: state.roleReducer.isEdit,
-        isLoading: state.commonReducer.isLoading
+        role: roleReducer.role,
+        roles: roleReducer.roles,
+        permissions: roleReducer.permissions,
+        isEdit: roleReducer.isEdit,
+        isLoading: commonReducer.isLoading
     }
 }
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({
-        setError: commonActions.setError,
-        clearError: commonActions.clearError,
-        getPermissions: actions.getPermissions,
-        setRoleEditMode: actions.setRoleEditMode,
-        setPermission: actions.setPermission,
-        setName: actions.setName,
-        createRole: actions.createRole,
-        resetRole: actions.resetRole,
-        updateRole: actions.updateRole,
-        getRoles: actions.getRoles,
-        setCurrentRole: actions.setCurrentRole
-    }, dispatch);
+    return bindActionCreators({...commonActions, ...actions}, dispatch);
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Role));

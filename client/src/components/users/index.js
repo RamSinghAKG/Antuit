@@ -137,35 +137,19 @@ User.propTypes = {
     isLoading: PropTypes.bool,
     isEdit:  PropTypes.bool
 };
-function mapStateToProps(state) {
+function mapStateToProps({userReducer, roleReducer, commonReducer}) {
     return {
-        isEdit: state.userReducer.isEdit,
-        users: state.userReducer.users,
-        user: state.userReducer.user,
-        totalRecord: state.userReducer.totalRecord,
-        roles: state.roleReducer.roles,
-        isLoading: state.commonReducer.isLoading,
-        selectedPage: state.userReducer.selectedPage
+        isEdit: userReducer.isEdit,
+        users: userReducer.users,
+        user: userReducer.user,
+        totalRecord: userReducer.totalRecord,
+        roles: roleReducer.roles,
+        isLoading: commonReducer.isLoading,
+        selectedPage: userReducer.selectedPage
     }
 }
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({
-        setError: commonActions.setError,
-        clearError: commonActions.clearError,
-        setCurrentUser: actions.setCurrentUser,
-        setEditMode: actions.setEditMode,
-        setName: actions.setName,
-        setUserId: actions.setUserId,
-        setEmail: actions.setEmail,
-        setRole: actions.setRole,
-        setClient: actions.setClient,
-        setSelectedPage: actions.setSelectedPage,
-        createUser: actions.createUser,
-        resetUser: actions.resetUser,
-        updateUser: actions.updateUser,
-        getUsers: actions.getUsers,
-        getRoles: roleActions.getRoles
-    }, dispatch);
+    return bindActionCreators({...commonActions, ...actions, ...roleActions}, dispatch);
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(User));
