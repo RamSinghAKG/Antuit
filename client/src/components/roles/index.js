@@ -65,7 +65,7 @@ const Role = (props) => {
                     {props.isLoading ? <Suspense fallback={<div>Loading...</div>}>
                         <Spinner />
                     </Suspense> : null}
-                    <LabelInput type="input" isInputDisable={isNameDisable} fieldKey="name" isRequired labelName="Name"  value={props.role.name} placeholder="Enter role name" onChange={props.setName}></LabelInput>
+                    <LabelInput type="input" isInputDisable={isNameDisable} fieldKey="name" isRequired labelName="Name"  value={props.role.name} placeholder="Enter role name" onChange={props.setRoleName}></LabelInput>
                     <LabelInput type="select" selectedIndex={selectedPermissionIndex} isRequired fieldKey="permission" options={allPermissions} labelName="Permission" value={props.role.permission} placeholder="Select Permission" onChange={(event) => props.setPermission(event.target.value)}></LabelInput>
                     
                     <div className="action-btn-container">
@@ -90,7 +90,7 @@ const Role = (props) => {
 Role.propTypes = {
     getPermissions: PropTypes.func,
     setPermission: PropTypes.func,
-    setName: PropTypes.func,
+    setRoleName: PropTypes.func,
     createRole: PropTypes.func,
     updateRole: PropTypes.func,
     getRoles: PropTypes.func,

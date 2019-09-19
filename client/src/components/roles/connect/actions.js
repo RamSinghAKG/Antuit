@@ -1,5 +1,3 @@
-import * as commonActions from 'common/actions';
-import * as service from 'common/service';
 export const SET_ROLE_EDITMODE = "SET_ROLE_EDITMODE";
 export const SET_ROLE_NAME = "SET_ROLE_NAME";
 export const SET_PERMISSION = "SET_PERMISSION";
@@ -13,90 +11,92 @@ export const GET_ROLE_INFO_REQUESTED = "GET_ROLE_INFO_REQUESTED";
 export const GET_ROLE_INFO_SUCCESS = "GET_ROLE_INFO_SUCCESS";
 export const GET_ROLE_INFO_FAILED = "GET_ROLE_INFO_FAILED";
 export const GET_PERMISSION_SUCCESS = "GET_PERMISSION_SUCCESS";
+//Saga
+export const GET_ROLES_SAGA = "GET_ROLES_SAGA";
+export const UPDATE_ROLE_SAGA = "UPDATE_ROLE_SAGA";
+export const CREATE_ROLE_SAGA = "CREATE_ROLE_SAGA";
+export const GET_PERMISSION_SAGA = "GET_PERMISSION_SAGA";
 
-export const setRoleEditMode = (isEdit) => (dispatch) => {
-    return dispatch({
+export const setRoleEditMode = (isEdit) => {
+    return {
         type: SET_ROLE_EDITMODE,
         payload: isEdit
-    });
+    };
 };
-export const setName = (name) => (dispatch) => {
-    return dispatch({
+export const setRoleName = (name) => {
+    return {
         type: SET_ROLE_NAME,
         payload: name
-    });
+    };
 };
 
-export const setPermission = (role) => (dispatch) => {
-    return dispatch({
+export const setPermission = (role) => {
+    return {
         type: SET_PERMISSION,
         payload: role
-    });
+    };
 };
-export const resetRole = () => (dispatch) => {
-    return dispatch({
+export const resetRole = () => {
+    return {
         type: RESET_ROLE
-    });
+    };
 };
-export const setCurrentRole = (role) => (dispatch) => {
-    return dispatch({
+export const setCurrentRole = (role) => {
+    return {
         type: SET_CURRENT_ROLE,
         payload: role
-    });
+    };
 };
-export  const createRole =  (roleInfo={}) => async (dispatch) => {
-    try {
-        commonActions.loadingInprogress(dispatch);
-        await service.postData(service.url.createRole, roleInfo);
-        commonActions.loadingCompleted(dispatch);
-        return dispatch({
-                    type: CREATE_ROLE_SUCCESS
-                });
-    }catch(error){
-        return commonActions.loadingFailed({status: 'FAILED', statusText: error.message})(dispatch);
-    }
-};
-export  const updateRole =  (roleInfo={}) => async (dispatch) => {
-    try {
-        commonActions.loadingInprogress(dispatch);
-        await service.updateData(service.url.updateRole, {role: roleInfo});
-        commonActions.loadingCompleted(dispatch);
-        return dispatch({
-                    type: UPDATE_ROLE_SUCCESS
-                });
-    } catch(error){
-        return commonActions.loadingFailed({status: 'FAILED', statusText: error.message})(dispatch);
-    }
-};
-export  const getRoles =  () => async (dispatch) => {
-    try {
-        commonActions.loadingInprogress(dispatch);
-        let url = service.url.getRoles;
-        const roles = await service.getData(url);
-        commonActions.loadingCompleted(dispatch);
-        return dispatch({
-            type: GET_ROLE_INFO_SUCCESS,
-            payload: roles.data
-        });
-    }catch(error){
-         commonActions.loadingFailed({status: 'FAILED', statusText: error.message})(dispatch);
+export  const createRole =  (roleInfo={}) => {
+    return {
+        type: CREATE_ROLE_SAGA,
+        roleInfo: roleInfo
     }
 };
 
-export  const getPermissions =  () => async (dispatch) => {
-    try {
-        commonActions.loadingInprogress(dispatch);
-        let url = service.url.getPermissions;
-        const permissions = await service.getData(url);
-        commonActions.loadingCompleted(dispatch);
-        return dispatch({
-            type: GET_PERMISSION_SUCCESS,
-            payload: permissions.data
-        });
-    }catch(error){
-         commonActions.loadingFailed({status: 'FAILED', statusText: error.message})(dispatch);
+export const createRoleSuccess = () => {
+    return {
+        type: CREATE_ROLE_SUCCESS
+    };
+}
+export  const updateRole =  (roleInfo={}) => {
+    return {
+        type: UPDATE_ROLE_SAGA,
+        roleInfo: roleInfo
+    };
+};
+export const updateRoleSuccess = () => {
+    return {
+        type: UPDATE_ROLE_SUCCESS
+    };
+};
+export  const getRoles =  () => {
+    return {
+        type: GET_ROLES_SAGA
     }
 };
+
+export const getRolesSuccess = (roles) => {
+    console.log("roles: ", roles);
+    
+    return {
+        type: GET_ROLE_INFO_SUCCESS,
+        payload: roles.data
+    };
+}
+
+export  const getPermissions =  () => {
+    return {
+        type: GET_PERMISSION_SAGA
+    };
+};
+
+export const getPermissionSuccess = (permissions) => {
+    return {
+        type: GET_PERMISSION_SUCCESS,
+        payload: permissions.data
+    };
+}
 
 
 

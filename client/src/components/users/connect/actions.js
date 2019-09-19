@@ -1,7 +1,5 @@
-import * as commonActions from 'common/actions';
-import * as service from 'common/service';
 export const SET_EDITMODE = "SET_EDITMODE";
-export const SET_NAME = "SET_NAME";
+export const SET_USER_NAME = "SET_USER_NAME";
 export const SET_ROLE = "SET_ROLE";
 export const SET_EMAIL = "SET_EMAIL";
 export const SET_USERID = "SET_USERID";
@@ -16,100 +14,103 @@ export const UPDATE_USER_FAILED = "UPDATE_USER_FAILED";
 export const GET_USER_INFO_REQUESTED = "GET_USER_INFO_REQUESTED";
 export const GET_USER_INFO_SUCCESS = "GET_USER_INFO_SUCCESS";
 export const GET_USER_INFO_FAILED = "GET_USER_INFO_FAILED";
+//Sagas
+export const GET_USER_INFO_SAGA = "GET_USER_INFO_SAGA";
+export const CREATE_USER_SAGA = "CREATE_USER_SAGA";
+export const UPDATE_USER_SAGA = "UPDATE_USER_SAGA";
 
-export const setEditMode = (isEdit) => (dispatch) => {
-    return dispatch({
+export const resetUser = () => {
+    return { type: RESET_USER };
+};
+
+export const setEditMode = (isEdit) => {
+    return {
         type: SET_EDITMODE,
         payload: isEdit
-    });
+    };
 };
-export const setName = (name) => (dispatch) => {
-    return dispatch({
-        type: SET_NAME,
+export const setName = (name) => {
+    console.log('name: ', name);
+    
+    return {
+        type: SET_USER_NAME,
         payload: name
-    });
+    };
 };
-export const setUserId = (userId) => (dispatch) => {
-    return dispatch({
+export const setUserId = (userId) => {
+    return {
         type: SET_USERID,
         payload: userId
-    });
+    };
 };
-export const setClient = (client) => (dispatch) => {
-    return dispatch({
+export const setClient = (client) => {
+    return {
         type: SET_CLIENT,
         payload: client.toUpperCase()
-    });
+    };
 };
-export const setEmail = (email) => (dispatch) => {
-    return dispatch({
+export const setEmail = (email) => {
+    return {
         type: SET_EMAIL,
         payload: email
-    });
+    };
 };
-export const setRole = (role) => (dispatch) => {
-    return dispatch({
+export const setRole = (role) => {
+    return {
         type: SET_ROLE,
         payload: role
-    });
+    };
 };
-export const resetUser = () => (dispatch) => {
-    return dispatch({
-        type: RESET_USER
-    });
-};
-export const setCurrentUser = (user) => (dispatch) => {
+
+export const setCurrentUser = (user) => {
     setEditMode(true);
-    return dispatch({
+    return {
         type: SET_CURRENT_USER,
         payload: user
-    });
+    };
 };
-export  const createUser =  (userInfo={}) => async (dispatch) => {
-    try {
-        commonActions.loadingInprogress(dispatch);
-        await service.postData(service.url.createUser, userInfo);
-        commonActions.loadingCompleted(dispatch);
-        return dispatch({
-                    type: CREATE_USER_SUCCESS
-                });
-    }catch(error){
-        return commonActions.loadingFailed({status: 'FAILED', statusText: error.message})(dispatch);
+export  const createUser =  (userInfo={}) => {
+    return {
+        type: CREATE_USER_SAGA,
+        userInfo: userInfo
     }
 };
 
-export  const updateUser =  (userInfo={}) => async (dispatch) => {
-    try {
-        commonActions.loadingInprogress(dispatch);
-        await service.updateData(service.url.updateUser, {user: userInfo});
-        commonActions.loadingCompleted(dispatch);
-        return dispatch({
-                    type: UPDATE_USER_SUCCESS
-                });
-    } catch(error){
-        return commonActions.loadingFailed({status: 'FAILED', statusText: error.message})(dispatch);
+export const createUserSuccess = () => {
+    return {
+        type: CREATE_USER_SUCCESS
+    };
+}
+
+export  const updateUser =  (userInfo={}) => {
+    return {
+        type: UPDATE_USER_SAGA,
+        userInfo: userInfo
     }
 };
 
-export const setSelectedPage = (pagenum) => async (dispatch) => {
-    console.log('setSelectedPage');
-    return dispatch({ type: SET_SELECTED_PAGE, payload: pagenum});
+export const updateUserSuccess = () => {
+    return {
+        type: UPDATE_USER_SUCCESS
+    };
+}
+
+export const setSelectedPage = (pagenum) => {
+    return { type: SET_SELECTED_PAGE, payload: pagenum};
 };
 
-export  const getUsers =  (offset=0) => async (dispatch) => {
-    try {
-        resetUser();        
-        commonActions.loadingInprogress(dispatch);
-        let url = service.url.getUsers + offset;
-        const users = await service.getData(url);
-        commonActions.loadingCompleted(dispatch);
-        return dispatch({
-            type: GET_USER_INFO_SUCCESS,
-            payload: {users: users.data, totalRecord: users.totalRecord}
-        });
-    }catch(error){
-         commonActions.loadingFailed({status: 'FAILED', statusText: error.message})(dispatch);
+export  const getUsers =  (offset=0) => {
+    return {
+        type: GET_USER_INFO_SAGA,
+        offset: offset
     }
+};
+
+export const recievedUsers = (users) => {
+    return {
+        type: GET_USER_INFO_SUCCESS,
+        payload: {users: users.data, totalRecord: users.totalRecord}
+    };
 };
 
 

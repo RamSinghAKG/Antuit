@@ -12,7 +12,7 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actions.SET_EDITMODE:
             return { ...state, isEdit: action.payload  };
-        case actions.SET_NAME:
+        case actions.SET_USER_NAME:
             return { ...state, user: { ...state.user, name: action.payload } };
         case actions.SET_ROLE:
             return { ...state, user: { ...state.user, role: action.payload } };
